@@ -3,7 +3,7 @@
  */
 public class Piece {
 	
-	private Color cor;
+	private Color color;
 	private boolean isMaster;
 	private boolean isAlive;
 	
@@ -13,7 +13,7 @@ public class Piece {
      * @param isMaster Se o tipo da peça é mestre ou não
      */
     public Piece(Color color, boolean isMaster) {
-    	cor = color;
+    	this.color = color;
     	this.isMaster = isMaster;
     	isAlive = true;
     }
@@ -23,7 +23,7 @@ public class Piece {
      * @return Enum Color com a cor da peça
      */
     public Color getColor() {
-        return(cor);
+        return(color);
     }
 
     /**
@@ -42,8 +42,7 @@ public class Piece {
         return(isAlive);
     }
     
-    //N�o vai comentar mesmo??
-    public void eliminaPeca(){
+    public void die(){
     	isAlive = false;
     }
 }

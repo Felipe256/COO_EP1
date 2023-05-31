@@ -89,7 +89,7 @@ public class Spot {
     protected void occupySpot(Piece piece) throws IllegalMovementException {
     	if(peca.getColor() != piece.getColor()) {
     		if(peca != null) {
-    			peca.eliminaPeca();
+    			peca.die();
     		}
     		peca = piece;
     	}else {
