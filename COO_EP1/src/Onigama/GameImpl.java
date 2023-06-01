@@ -7,6 +7,14 @@ public class GameImpl implements Game{
 	private Piece[] redPieces;
 	private Card tableCard;
 	
+	public GameImpl() {
+		startBoard();
+		Card gameCards[] = Card.createCards();
+		tableCard = gameCards[0];
+		playerBlue = new Player("Anonymous1", Color.BLUE, gameCards[1], gameCards[2]);
+		playerRed = new Player("Anonymous2", Color.RED, gameCards[3], gameCards[4]);
+	}
+	
 	public GameImpl(String namePlayerBlue, String namePlayerRed) {
 		startBoard();
 		Card gameCards[] = Card.createCards();
@@ -16,19 +24,22 @@ public class GameImpl implements Game{
 	}
 	
 	private void startBoard(){
+		bluePieces = new Piece[5];
+		redPieces = new Piece[5];
 		bluePieces[0] = new Piece(Color.BLUE, true);
 		redPieces[0] = new Piece(Color.RED, true);
 		for(int i = 1; i < 5; i++) {
 			bluePieces[i] = new Piece(Color.BLUE, false);
 			redPieces[i] = new Piece(Color.RED, false);
 		}
+		board = new Spot[5][5];
 		board[0][2] = new Spot(bluePieces[0], new Position(-2, 0), Color.BLUE);
 		board[4][2] = new Spot(redPieces[0], new Position(2, 0), Color.RED);
 		for(int i = 0; i <= 1; i++) {
 			board[0][i] = new Spot(bluePieces[i+1], new Position(-2, -2 + i));
 			board[4][i] = new Spot(redPieces[i+1], new Position(2, -2 + i));
-			board[0][i] = new Spot(bluePieces[i+1], new Position(-2, 1 + i));
-			board[4][i] = new Spot(redPieces[i+1], new Position(2, 1 + i));
+			board[0][4 - i] = new Spot(bluePieces[i+1], new Position(-2, 1 + i));
+			board[4][4 - i] = new Spot(redPieces[i+1], new Position(2, 1 + i));
 		}
 		for(int i = 0; i < 5; i++) {
 			board[1][i] = new Spot(new Position(-1, i));
@@ -113,6 +124,18 @@ public class GameImpl implements Game{
      * OBS: Esse método é opcional não será utilizado na correção, mas serve para acompanhar os resultados parciais do jogo
      */
     public void printBoard() {
-    	
+    	for(int i = 0; i < 5; i++) {
+    		for(int j = 0; j < 5; j++) {
+    			Piece currentPiece = board[i][j].getPiece();
+    			if(currentPiece == null) {
+    				System.out.print(" 0");
+    			}else if(currentPiece.isMaster()) {
+    				System.out.print(" M");
+    			}else {
+    				System.out.print(" P");
+    			}
+    		}
+    		System.out.println("");
+    	}
     }
 }

@@ -86,7 +86,7 @@ public class Card {
     
     private static <E> List<E> getGameCards(List<E> allCards, int deleteNumber) {
     	int deckSize = allCards.size();
-    	List<E> deletableCards = allCards.subList(deckSize - deleteNumber, deckSize);
+    	List<E> deletableCards = allCards.subList(deleteNumber, deckSize);
     	List<E> cartas = new ArrayList<E>(deletableCards);
     	deletableCards.clear();
     	return cartas;
