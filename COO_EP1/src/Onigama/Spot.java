@@ -78,7 +78,7 @@ public class Spot {
      * @return Um booleano true para caso seja valido e false caso contrário
      */
     private boolean verificaValidadeDaCoordenada(int coordenada) {
-    	return(coordenada >=0 && coordenada <= 7);
+    	return(coordenada >= 0 && coordenada <= 4);
     }
 
     /**
@@ -93,7 +93,7 @@ public class Spot {
     		}
     		peca = piece;
     	}else {
-    		new IllegalMovementException("O espaço ocupado é da mesma cor");
+    		throw new IllegalMovementException("O espaço ocupado é por uma de suas pecas");
     	}
     }
 

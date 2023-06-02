@@ -6,11 +6,13 @@ public class GameImpl implements Game{
 	private Piece[] bluePieces;
 	private Piece[] redPieces;
 	private Card tableCard;
+	private Color turn;
 	
 	public GameImpl() {
 		startBoard();
 		Card gameCards[] = Card.createCards();
 		tableCard = gameCards[0];
+		turn = tableCard.getColor();
 		playerBlue = new Player("Anonymous1", Color.BLUE, gameCards[1], gameCards[2]);
 		playerRed = new Player("Anonymous2", Color.RED, gameCards[3], gameCards[4]);
 	}
@@ -19,6 +21,7 @@ public class GameImpl implements Game{
 		startBoard();
 		Card gameCards[] = Card.createCards();
 		tableCard = gameCards[0];
+		turn = tableCard.getColor();
 		playerBlue = new Player(namePlayerBlue, Color.BLUE, gameCards[1], gameCards[2]);
 		playerRed = new Player(namePlayerRed, Color.RED, gameCards[3], gameCards[4]);
 	}
@@ -33,18 +36,18 @@ public class GameImpl implements Game{
 			redPieces[i] = new Piece(Color.RED, false);
 		}
 		board = new Spot[5][5];
-		board[0][2] = new Spot(bluePieces[0], new Position(-2, 0), Color.BLUE);
-		board[4][2] = new Spot(redPieces[0], new Position(2, 0), Color.RED);
+		board[0][2] = new Spot(bluePieces[0], new Position(0, 2), Color.BLUE);
+		board[4][2] = new Spot(redPieces[0], new Position(4, 2), Color.RED);
 		for(int i = 0; i <= 1; i++) {
-			board[0][i] = new Spot(bluePieces[i+1], new Position(-2, -2 + i));
-			board[4][i] = new Spot(redPieces[i+1], new Position(2, -2 + i));
-			board[0][4 - i] = new Spot(bluePieces[i+1], new Position(-2, 1 + i));
-			board[4][4 - i] = new Spot(redPieces[i+1], new Position(2, 1 + i));
+			board[0][i] = new Spot(bluePieces[i+1], new Position(0, i));
+			board[4][i] = new Spot(redPieces[i+1], new Position(4, i));
+			board[0][4 - i] = new Spot(bluePieces[i+1], new Position(0, 4 - i));
+			board[4][4 - i] = new Spot(redPieces[i+1], new Position(4, 4 - i));
 		}
 		for(int i = 0; i < 5; i++) {
-			board[1][i] = new Spot(new Position(-1, i));
-			board[2][i] = new Spot(new Position(0, i));
-			board[3][i] = new Spot(new Position(1, i));
+			board[1][i] = new Spot(new Position(1, i));
+			board[2][i] = new Spot(new Position(2, i));
+			board[3][i] = new Spot(new Position(3 , i));
 		}
 	}
 	
@@ -105,7 +108,96 @@ public class GameImpl implements Game{
      * @exception InvalidPieceException Caso uma peÃ§a que nÃ£o estÃ¡ no tabuleiro seja usada
      */
     public void makeMove(Piece piece, Card card, Position position) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException{
-    	
+    	Spot newSpot = new Spot(position);
+    	if(piece == null) {
+    		throw new InvalidPieceException("Nenhuma peca foi selecionada para ser movida");
+    	}
+    	Color pieceMovedColor = piece.getColor();
+    	if(turn != pieceMovedColor) {
+    		throw new IncorrectTurnOrderException("A jogada não deve ser realizada pelo jogador " + pieceMovedColor);
+    	}
+    	if(position == null) {
+    		throw new IllegalMovementException("Nenhum movimento foi realizado na peca");
+    	}
+    	if(newSpot.isValid() != true) {
+    		throw new IllegalMovementException("A peca esta sendo movida para fora do tabuleiro");
+    	}
+    	int selectedRow = position.getRow();
+    	int selectedCol = position.getCol();
+    	Piece piecePositioned = board[selectedRow][selectedCol].getPiece();
+    	if(piecePositioned != null) {
+    		Color piecePositionedColor = piecePositioned.getColor();
+        	if(pieceMovedColor == piecePositionedColor) {
+        		throw new IllegalMovementException("A posicao esta ocupada por uma de suas peças");
+        	}
+    	}
+    	if(card == null) {
+    		throw new InvalidCardException("Nenhuma carta foi selecionada para mover uma peca");
+    	}
+    	if(pieceMovedColor == Color.BLUE) {
+    		Card blueCards[] = playerBlue.getCards();
+    		if(card != blueCards[0] && card != blueCards[1]) {
+    			throw new InvalidCardException("A carta utilizada nao esta na mao do jogador " + pieceMovedColor);
+    		}
+    		boolean pieceValid = false;
+    		for(Piece bluePlayerPiece : bluePieces) {
+    			if(bluePlayerPiece == piece) {
+    				pieceValid = true;
+    			}
+    		}
+    		if(pieceValid != true) {
+    			throw new InvalidPieceException("A peca nao esta no tabuleiro");
+    		}
+    	}else {//if color is RED
+    		Card redCards[] = playerRed.getCards();
+    		if(card != redCards[0] && card != redCards[1]) {
+    			throw new InvalidCardException("A carta utilizada nao esta na mao do jogador " + pieceMovedColor);
+    		}
+    		boolean pieceValid = false;
+    		for(Piece redPlayerPiece : bluePieces) {
+    			if(redPlayerPiece == piece) {
+    				pieceValid = true;
+    				break;
+    			}
+    		}
+    		if(pieceValid != true) {
+    			throw new InvalidPieceException("A peca nao esta no tabuleiro");
+    		}
+    	}
+    	if(piece.isAlive() != true) {
+    		throw new InvalidPieceException("A peca nao esta no tabuleiro");
+    	}
+    	boolean validMovement = false;
+    	Position[] possibleMoves = card.getPositions();
+    	Position piecePosition = findPiecePosition(piece);
+    	for(Position attemptMove : possibleMoves) {
+    		int attemptRow = attemptMove.getRow() + piecePosition.getRow();
+    		int attemptCol = attemptMove.getCol() + piecePosition.getRow();
+    		if(attemptRow == selectedRow && attemptCol == selectedRow) {
+    			validMovement = true;
+    			break;
+    		}
+    	}
+    	if(validMovement != true) {
+    		throw new IllegalMovementException("O movimento desejado nao pode ser realizado pela carta "+card.getName());
+    	}
+    	if(piecePositioned != null) {
+    		piecePositioned.die();
+    	}
+        board[selectedRow][selectedCol].occupySpot(piece);
+    	board[piecePosition.getRow()][piecePosition.getCol()].releaseSpot();
+    }
+    
+    //FAZER UM OUTRO VETOR QUE ARMAZENA AS POSIÇÕES OU DEIXAR PRA PROCURAR ASSIM MESMO?
+    private Position findPiecePosition(Piece piece) {
+    	for(int i = 0; i < 5; i++) {
+    		for(int j = 0; j < 5; j++) {
+        		if(board[i][j].getPiece() == piece) {
+        			return(board[i][j].getPosition());
+        		}
+        	}
+    	}
+    	return(null);
     }
 
     /**
@@ -116,6 +208,27 @@ public class GameImpl implements Game{
      * @return Um booleano true para caso esteja em condiÃ§Ãµes de vencer e false caso contrÃ¡rio
      */
     public boolean checkVictory(Color color) {
+    	if(color == Color.BLUE) {
+    		Piece redMaster = redPieces[0];
+    		if(!redMaster.isAlive()) {
+    			return(true);
+    		}
+    		Piece blueWinCondition2 = board[4][2].getPiece();
+    		if(blueWinCondition2 != null) {
+    			if(blueWinCondition2.isMaster() && blueWinCondition2.getColor() == Color.BLUE) {
+    				return(true);
+    			}
+    		}
+    	}else {//if color is RED
+    		Piece blueMaster = bluePieces[0];
+    		if(blueMaster.isAlive()) {
+    			return(true);
+    		}
+    		Piece redWinCondition2 = board[0][2].getPiece();
+    		if(redWinCondition2.isMaster() && redWinCondition2.getColor() == Color.RED) {
+    			return(true);
+    		}
+    	}
     	return(false);
     }
 

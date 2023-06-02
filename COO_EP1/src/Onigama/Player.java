@@ -3,10 +3,10 @@
  */
 public class Player {
 	
-	private String nome;
-	private Color cor;
-	private Card carta1;
-	private Card carta2;
+	private String name;
+	private Color color;
+	private Card card1;
+	private Card card2;
 	
     /**
      * Construtor que define informa√ß√µes b√°sicas do jogador
@@ -15,10 +15,10 @@ public class Player {
      * @param cards Cartas na m√£o do jogador
      */
     public Player(String name, Color pieceColor, Card[] cards) {
-    	nome = name;
-    	cor = pieceColor;
-    	carta1 = cards[0];
-    	carta2 = cards[1];
+    	this.name = name;
+    	color = pieceColor;
+    	card1 = cards[0];
+    	card2 = cards[1];
     }
 
     /**
@@ -29,10 +29,10 @@ public class Player {
      * @param card2 A segunda carta na m√£o do jogador
      */
     public Player(String name, Color pieceColor, Card card1, Card card2) {
-    	nome = name;
-    	cor = pieceColor;
-    	carta1 = card1;
-    	carta2 = card2;
+    	this.name = name;
+    	color = pieceColor;
+    	this.card1 = card1;
+    	this.card2 = card2;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Player {
      * @return String com o nome do jogador(a)
      */
     public String getName() {
-        return(nome);
+        return(name);
     }
 
     /**
@@ -48,7 +48,7 @@ public class Player {
      * @return Enum Color com a cor das pe√ßas do jogador
      */
     public Color getPieceColor() {
-        return(cor);
+        return(color);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Player {
      * @return Booleano true para caso seja um mestre e false caso contr√°rio
      */
     public Card[] getCards() {
-    	Card cartasNaMao[] = {carta1, carta2};
+    	Card cartasNaMao[] = {card1, card2};
         return(cartasNaMao);
     }
 
@@ -67,12 +67,11 @@ public class Player {
      * @exception InvalidCardException Caso a carta n√£o esteja na m√£o do jogador e/ou na mesa
      */
     protected void swapCard(Card oldCard, Card newCard) throws InvalidCardException {
-    	try {
-    		Card auxiliarDeTroca = oldCard;
-    		oldCard = newCard;
-    		newCard = auxiliarDeTroca;
-    	} catch (RuntimeException error){
-    		new InvalidCardException("A carta escolhida n„o est· na m„o do jogador: "+error);
+    	if(oldCard != card1 && oldCard != card2) {
+        	throw new InvalidCardException("A carta escolhida n„o est· na m„o do jogador");
     	}
+    	Card auxiliarDeTroca = oldCard;
+    	oldCard = newCard;
+    	newCard = auxiliarDeTroca;
     }
 }
