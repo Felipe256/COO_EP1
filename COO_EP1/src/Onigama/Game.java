@@ -35,16 +35,16 @@ public interface Game {
     Player getBluePlayer();
 
     /**
-     * M√©todo que move uma pe√ßa
-     * @param piece A pe√ßa que ir√° mover
-     * @param card A carta de movimento que ser√° usada
-     * @param position A posi√ß√£o da carta para onde a pe√ßa ir√° se mover
-     * @exception IncorrectTurnOrderException Caso n√£o seja a vez de um jogador fazer um movimento
-     * @exception IllegalMovementException Caso uma pe√ßa seja movida para fora do tabuleiro ou para uma posi√ß√£o onde j√° tem uma pe√ßa da mesma cor
-     * @exception InvalidCardException Caso uma carta que n√£o est√° na m√£o do jogador seja usada
-     * @exception InvalidPieceException Caso uma pe√ßa que n√£o est√° no tabuleiro seja usada
+     * MÈtodo que move uma peÁa
+     * @param card A carta de movimento que ser· usada
+     * @param cardMove A posiÁ„o da carta para onde a peÁa ir· se mover
+     * @param currentPos A posiÁ„o da peÁa que ir· se mover
+     * @exception IncorrectTurnOrderException Caso n„o seja a vez de um jogador fazer um movimento
+     * @exception IllegalMovementException Caso uma peÁa seja movida para fora do tabuleiro ou para uma posiÁ„o onde j· tem uma peÁa da mesma cor
+     * @exception InvalidCardException Caso uma carta que n„o est· na m„o do jogador seja usada
+     * @exception InvalidPieceException Caso uma peÁa que n„o est· no tabuleiro seja usada
      */
-    void makeMove(Piece piece, Card card, Position position) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
+    void makeMove(Card card, Position cardMove, Position currentPos) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
 
     /**
      * M√©todo que confere se um jogador de uma determinada cor venceu o jogo. Crit√©rios de vit√≥ria:

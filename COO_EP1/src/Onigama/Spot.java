@@ -60,7 +60,7 @@ public class Spot {
      * MÃ©todo que devolve a cor do espaÃ§o
      * @return Enum Color com a cor do espaÃ§o. Caso o espaÃ§o nÃ£o tenha cor, o valor do enum serÃ¡ NONE
      */
-    Color getColor() {
+    public Color getColor() {
         return(cor);
     }
 
@@ -69,7 +69,7 @@ public class Spot {
      * @return Um booleano que indica se o objeto representa uma posiÃ§Ã£o vÃ¡lida no tabuleiro
      */
     public boolean isValid() {
-        return( verificaValidadeDaCoordenada(posicao.getRow()) && verificaValidadeDaCoordenada(posicao.getCol()) );
+        return(verificaValidadeDaCoordenada(posicao.getRow()) && verificaValidadeDaCoordenada(posicao.getCol()) );
     }
     
     /**
@@ -78,7 +78,7 @@ public class Spot {
      * @return Um booleano true para caso seja valido e false caso contrário
      */
     private boolean verificaValidadeDaCoordenada(int coordenada) {
-    	return(coordenada >=0 && coordenada <= 7);
+    	return(coordenada >= 0 && coordenada <= 4);
     }
 
     /**
@@ -89,11 +89,11 @@ public class Spot {
     protected void occupySpot(Piece piece) throws IllegalMovementException {
     	if(peca.getColor() != piece.getColor()) {
     		if(peca != null) {
-    			peca.eliminaPeca();
+    			peca.die();
     		}
     		peca = piece;
     	}else {
-    		new IllegalMovementException("O espaço ocupado é da mesma cor");
+    		throw new IllegalMovementException("O espaço ocupado é por uma de suas pecas");
     	}
     }
 

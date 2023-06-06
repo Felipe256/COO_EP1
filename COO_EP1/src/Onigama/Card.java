@@ -1,13 +1,13 @@
-import java.util.Random;
+import java.util.*;
 
 /**
  * Classe que contém informações das cartas
  */
 public class Card {
 	
-	private Color cor;
-	private String nome;
-	private Position[] posicoes;
+	private final Color cor;
+	private final String nome;
+	private final Position[] posicoes;
 	
     /**
      * Construtor que define os principais atributos de uma cara
@@ -51,24 +51,32 @@ public class Card {
      * @return Vetor de cartas com todas as cartas do jogo
      */
     public static Card[] createCards() {
-        String[] nomes = {"Tiger", "Dragon", "Frog", "Rabbit", "Crab", "Elephant", "Goose", "Rooster"};
-        Color[] cores = {Color.BLUE, Color.RED};
-        Position[] posicoesTiger = {new Position(0, -1), new Position(0, 2)};
-        Position[] posicoesDragon = {new Position(-2, 1), new Position(-1, -1), new Position(1, -1), new Position(2, 1)};
-        Position[] posicoesFrog = {new Position(-2, 0), new Position(-1, 1), new Position(1, -1)};
-        Position[] posicoesRabbit = {new Position(-1, -1), new Position(1, 1), new Position(2, 0)};
-        Position[] posicoesCrab = {new Position(-2, 0), new Position(0, 1), new Position(2, 0)};
-        Position[] posicoesElephant = {new Position(-1, 0), new Position(-1, 1), new Position(1, 0), new Position(1, 1)};
-        Position[] posicoesGoose = {new Position(-1, 0), new Position(-1, 1), new Position(1, 0), new Position(1, -1)};
-        Position[] posicoesRooster = {new Position(-1, 0), new Position(-1, -1), new Position(1, 0), new Position(1, 1)};
-        Position[][] posicoesRelativas = {posicoesTiger, posicoesDragon, posicoesFrog, posicoesRabbit, posicoesCrab, posicoesElephant, posicoesGoose, posicoesRooster};
-        Card[] cartasEscolhidas = new Card[5];
-        Random gerador = new Random();
-        for(int i = 0; i < 5; i++) {
-        	int cartaAleatoria = gerador.nextInt(8);
-        	int corAleatoria = gerador.nextInt(2);
-        	cartasEscolhidas[i] = new Card(nomes[cartaAleatoria], cores[corAleatoria], posicoesRelativas[cartaAleatoria]);
+        String[] allNames = {"Tiger", "Dragon", "Frog", "Rabbit", "Crab", "Elephant", "Goose", "Rooster"};
+        Color[] allColors = {Color.BLUE, Color.RED, Color.RED, Color.BLUE, Color.BLUE, Color.RED, Color.BLUE, Color.RED};
+        Position[] posicoesTiger = {new Position(0, 1), new Position(0, -2)};
+        Position[] posicoesDragon = {new Position(-2, -1), new Position(-1, 1), new Position(1, 1), new Position(2, -1)};
+        Position[] posicoesFrog = {new Position(-2, 0), new Position(-1, -1), new Position(1, 1)};
+        Position[] posicoesRabbit = {new Position(-1, 1), new Position(1, -1), new Position(2, 0)};
+        Position[] posicoesCrab = {new Position(-2, 0), new Position(0, -1), new Position(2, 0)};
+        Position[] posicoesElephant = {new Position(-1, 0), new Position(-1, -1), new Position(1, 0), new Position(1, -1)};
+        Position[] posicoesGoose = {new Position(-1, 0), new Position(-1, -1), new Position(1, 0), new Position(1, 1)};
+        Position[] posicoesRooster = {new Position(-1, 0), new Position(-1, 1), new Position(1, 0), new Position(1, -1)};
+        Position[][] allMoves = {posicoesTiger, posicoesDragon, posicoesFrog, posicoesRabbit, posicoesCrab, posicoesElephant, posicoesGoose, posicoesRooster};
+        List<Card> allCards = new ArrayList<Card>();
+        for(int i = 0; i < allNames.length; i++) {
+        	allCards.add(new Card(allNames[i], allColors[i], allMoves[i]));
         }
-    	return(cartasEscolhidas);
+        Collections.shuffle(allCards);
+        getGameCards(allCards, 5);
+    	return(allCards.toArray(new Card[0]));
     }
+    
+    public static <E> List<E> getGameCards(List<E> allCards, int deleteNumber) {
+    	int deckSize = allCards.size();
+    	List<E> deletableCards = allCards.subList(deleteNumber, deckSize);
+    	List<E> cartas = new ArrayList<E>(deletableCards);
+    	deletableCards.clear();
+    	return cartas;
+    	}
+
 }
