@@ -87,11 +87,13 @@ public class Spot {
      * @exception IllegalMovementException Caso o espa√ßo j√° esteja ocupado por uma pe√ßa da mesma cor
      */
     protected void occupySpot(Piece piece) throws IllegalMovementException {
-    	if(peca.getColor() != piece.getColor()) {
-    		if(peca != null) {
-    			peca.die();
-    		}
+    	if(this.peca == null) {
     		peca = piece;
+    	}else if(this.peca.getColor() != piece.getColor()) {
+    		if(this.peca != null) {
+    			this.peca.die();
+    		}
+    		this.peca = piece;
     	}else {
     		throw new IllegalMovementException("O espaÁo ocupado È por uma de suas pecas");
     	}

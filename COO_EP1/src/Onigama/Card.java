@@ -53,14 +53,14 @@ public class Card {
     public static Card[] createCards() {
         String[] allNames = {"Tiger", "Dragon", "Frog", "Rabbit", "Crab", "Elephant", "Goose", "Rooster"};
         Color[] allColors = {Color.BLUE, Color.RED, Color.RED, Color.BLUE, Color.BLUE, Color.RED, Color.BLUE, Color.RED};
-        Position[] posicoesTiger = {new Position(0, 1), new Position(0, -2)};
-        Position[] posicoesDragon = {new Position(-2, -1), new Position(-1, 1), new Position(1, 1), new Position(2, -1)};
-        Position[] posicoesFrog = {new Position(-2, 0), new Position(-1, -1), new Position(1, 1)};
-        Position[] posicoesRabbit = {new Position(-1, 1), new Position(1, -1), new Position(2, 0)};
-        Position[] posicoesCrab = {new Position(-2, 0), new Position(0, -1), new Position(2, 0)};
-        Position[] posicoesElephant = {new Position(-1, 0), new Position(-1, -1), new Position(1, 0), new Position(1, -1)};
-        Position[] posicoesGoose = {new Position(-1, 0), new Position(-1, -1), new Position(1, 0), new Position(1, 1)};
-        Position[] posicoesRooster = {new Position(-1, 0), new Position(-1, 1), new Position(1, 0), new Position(1, -1)};
+        Position[] posicoesTiger = {new Position(+1, 0), new Position(-2, 0)};
+        Position[] posicoesDragon = {new Position(-1, -2), new Position(+1, -1), new Position(+1, +1), new Position(-1, +2)};
+        Position[] posicoesFrog = {new Position(0, -2), new Position(-1, -1), new Position(+1, +1)};
+        Position[] posicoesRabbit = {new Position(+1, -1), new Position(-1, +1), new Position(0, +2)};
+        Position[] posicoesCrab = {new Position(0, -2), new Position(-1, 0), new Position(0, +2)};
+        Position[] posicoesElephant = {new Position(0, -1), new Position(-1, -1), new Position(0, +1), new Position(-1, +1)};
+        Position[] posicoesGoose = {new Position(0, -1), new Position(-1, -1), new Position(0, +1), new Position(+1, +1)};
+        Position[] posicoesRooster = {new Position(0, -1), new Position(+1, -1), new Position(0, +1), new Position(-1, +1)};
         Position[][] allMoves = {posicoesTiger, posicoesDragon, posicoesFrog, posicoesRabbit, posicoesCrab, posicoesElephant, posicoesGoose, posicoesRooster};
         List<Card> allCards = new ArrayList<Card>();
         for(int i = 0; i < allNames.length; i++) {

@@ -70,8 +70,10 @@ public class Player {
     	if(oldCard != card1 && oldCard != card2) {
         	throw new InvalidCardException("A carta escolhida não está na mão do jogador");
     	}
-    	Card auxiliarDeTroca = oldCard;
-    	oldCard = newCard;
-    	newCard = auxiliarDeTroca;
+    	if(oldCard == card1) {
+    		card1 = newCard;
+    	}else {
+    		card2 = newCard;
+    	}
     }
 }
