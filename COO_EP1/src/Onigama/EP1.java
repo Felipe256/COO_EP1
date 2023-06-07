@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class EP1 {
-	public static void main(String[] args) throws IllegalMovementException{
+	public static void main(String[] args){
 		GameImpl gameTest = new GameImpl();
 		Color lastTurn = (gameTest.getColorTurn() == Color.BLUE ? Color.RED : Color.BLUE);
 		Scanner in = new Scanner(System.in);
@@ -13,9 +13,8 @@ public class EP1 {
 			int idCard = in.nextInt();
 			int posRow = in.nextInt();
 			int posCol = in.nextInt();
-			gameTest.makeMove(usableCard[idCard], new Position(posRow, posCol), new Position(pieceRow, pieceCol));
 			lastTurn = gameTest.getColorTurn();
-			gameTest.changeTurn();
+			gameTest.makeMove(usableCard[idCard], new Position(posRow, posCol), new Position(pieceRow, pieceCol));
 		}
 		System.out.println("O jogador "+lastTurn+" ganhou!");
 		in.close();

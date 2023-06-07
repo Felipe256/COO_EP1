@@ -199,6 +199,7 @@ public class GameImpl implements Game{
     	board[currentPosition.getRow()][currentPosition.getCol()].releaseSpot();
     	player.swapCard(card, tableCard);
     	tableCard = card;
+    	changeTurn();
     }
 
     /**
@@ -231,6 +232,7 @@ public class GameImpl implements Game{
     
     public void printEverything() {
     	printBoard();
+    	System.out.println("Turno do jogador: "+turn);
     	printAllCards();
     }
     
@@ -269,7 +271,7 @@ public class GameImpl implements Game{
     	}
     }
     
-	public void changeTurn(){
+	private void changeTurn(){
 		if(turn == Color.BLUE){
 			turn = Color.RED;
 		}else{//if color is red
