@@ -30,6 +30,9 @@ public class GameImpl implements Game{
 	
 	public GameImpl(String namePlayerRed, String namePlayerBlue, Card[] deck) {
 		startBoard();
+		if(deck.length < 5) {
+			throw new IllegalArgumentException("O deck recebido possui menos de 5 cartas");
+		}
 		List<Card> deckList = Arrays.asList(deck);
 		Collections.shuffle(deckList);
 		deckList = Card.getGameCards(deckList, 5);
