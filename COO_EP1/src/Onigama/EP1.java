@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class EP1 {
 	public static void main(String[] args){
-		GameImpl gameTest = new GameImpl();
+		Card vetor[] = {new Card("Card1", Color.BLUE, null)};
+		GameImpl gameTest = new GameImpl("Felipe", "Bruno", vetor);
 		Color lastTurn = (gameTest.getColorTurn() == Color.BLUE ? Color.RED : Color.BLUE);
 		Scanner in = new Scanner(System.in);
 		while(gameTest.checkVictory(lastTurn) != true) {
