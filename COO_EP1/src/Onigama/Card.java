@@ -67,16 +67,12 @@ public class Card {
         	allCards.add(new Card(allNames[i], allColors[i], allMoves[i]));
         }
         Collections.shuffle(allCards);
-        getGameCards(allCards, 5);
-    	return(allCards.toArray(new Card[0]));
+        List<Card> deckList = getGameCards(allCards);
+        return(deckList.toArray(new Card[0]));
     }
     
-    public static <E> List<E> getGameCards(List<E> allCards, int deleteNumber) {
-    	int deckSize = allCards.size();
-    	List<E> deletableCards = allCards.subList(deleteNumber, deckSize);
-    	List<E> cartas = new ArrayList<E>(deletableCards);
-    	deletableCards.clear();
-    	return cartas;
+    public static <E> List<E> getGameCards(List<E> allCards) {
+    	return allCards.subList(0, 5);
     	}
 
 }

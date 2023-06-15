@@ -2,7 +2,9 @@ import java.util.Scanner;
 
 public class EP1 {
 	public static void main(String[] args){
-		Card vetor[] = {new Card("Card1", Color.BLUE, null)};
+		Position[] posicoes = {new Position(1,0), new Position(-1,0), new Position(0,+1), new Position(0,-1), new Position(1,1), new Position(1,-1), new Position(-1,-1), new Position(-1,1)};
+		Card cartaRepetida = new Card("TorreSimples", Color.BLUE, posicoes)  ;
+		Card vetor[] = {cartaRepetida, cartaRepetida, cartaRepetida, cartaRepetida, cartaRepetida};
 		GameImpl gameTest = new GameImpl("Felipe", "Bruno", vetor);
 		Color lastTurn = (gameTest.getColorTurn() == Color.BLUE ? Color.RED : Color.BLUE);
 		Scanner in = new Scanner(System.in);

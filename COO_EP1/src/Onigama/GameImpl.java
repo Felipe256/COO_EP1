@@ -35,7 +35,7 @@ public class GameImpl implements Game{
 		}
 		List<Card> deckList = Arrays.asList(deck);
 		Collections.shuffle(deckList);
-		deckList = Card.getGameCards(deckList, 5);
+		deckList = Card.getGameCards(deckList);
 		Card[] gameCards = deckList.toArray(new Card[0]);
 		tableCard = gameCards[0];
 		turn = tableCard.getColor();
@@ -126,39 +126,53 @@ public class GameImpl implements Game{
      */
     public void makeMove(Card card, Position cardPosition, Position currentPosition) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException{
     	Spot oldSpot = new Spot(currentPosition);
-    	Spot newSpot = new Spot(cardPosition);
     	if(oldSpot.isValid() == false) {
     		throw new InvalidPieceException("Nao ha peca na posicao selecionada ja que a posicao nao existe");
     	}
-    	int linPiece = currentPosition.getRow();
+    	int rowPiece = currentPosition.getRow();
     	int colPiece = currentPosition.getCol();
-    	Piece piece = board[linPiece][colPiece].getPiece();
+    	Piece piece = board[rowPiece][colPiece].getPiece();
     	if(piece == null) {
     		throw new InvalidPieceException("Nenhuma peca foi selecionada para ser movida");
     	}
     	Color pieceMovedColor = piece.getColor();
     	if(turn != pieceMovedColor) {
-    		throw new IncorrectTurnOrderException("A jogada n�o deve ser realizada pelo jogador " + pieceMovedColor);
+    		throw new IncorrectTurnOrderException("A jogada nao deve ser realizada pelo jogador " + pieceMovedColor);
     	}
     	if(cardPosition == null) {
-    		throw new IllegalMovementException("Nenhum movimento foi realizado na peca");
-    	}
-    	if(newSpot.isValid() == false) {
-    		throw new IllegalMovementException("A peca esta sendo movida para fora do tabuleiro");
-    	}
-    	int selectedRow = cardPosition.getRow();
-    	int selectedCol = cardPosition.getCol();
-    	Piece piecePositioned = board[selectedRow][selectedCol].getPiece();
-    	if(piecePositioned != null) {
-    		Color piecePositionedColor = piecePositioned.getColor();
-        	if(pieceMovedColor == piecePositionedColor) {
-        		throw new IllegalMovementException("A posicao esta ocupada por uma de suas pe�as");
-        	}
+    		throw new IllegalMovementException("Nenhum movimento foi escolhido");
     	}
     	if(card == null) {
     		throw new InvalidCardException("Nenhuma carta foi selecionada para mover uma peca");
     	}
-    	Card playerCards[];
+		boolean validMovement = false;
+		Position[] possibleMoves = card.getPositions();
+		for(Position attemptMove : possibleMoves) {
+			int attemptRow = attemptMove.getRow();
+			int attemptCol = attemptMove.getCol();
+			if(attemptRow == cardPosition.getRow() && attemptCol == cardPosition.getCol()) {
+				validMovement = true;
+				break;
+			}
+		}
+		Position newPosition = new Position(rowPiece+cardPosition.getRow(), colPiece+cardPosition.getCol());
+		Spot newSpot = new Spot(newPosition);
+		if(newSpot.isValid() == false) {
+			throw new IllegalMovementException("A peca esta sendo movida para fora do tabuleiro");
+		}
+		int selectedRow = newPosition.getRow();
+		int selectedCol = newPosition.getCol();
+		Piece piecePositioned = board[selectedRow][selectedCol].getPiece();
+		if(piecePositioned != null) {
+			Color piecePositionedColor = piecePositioned.getColor();
+			if(pieceMovedColor == piecePositionedColor) {
+				throw new IllegalMovementException("A posicao esta ocupada por uma de suas pecas");
+			}
+		}
+		if(validMovement == false) {
+			throw new IllegalMovementException("O movimento desejado nao pode ser realizado pela carta "+card.getName());
+		}
+    	Card[] playerCards;
     	Piece[] playerPieces;
     	Player player;
     	if(pieceMovedColor == Color.BLUE) {
@@ -182,19 +196,6 @@ public class GameImpl implements Game{
 		if(pieceValid == false) {
 			throw new InvalidPieceException("A peca nao esta no tabuleiro");
 		}
-    	boolean validMovement = false;
-    	Position[] possibleMoves = card.getPositions();
-    	for(Position attemptMove : possibleMoves) {
-    		int attemptRow = attemptMove.getRow() + currentPosition.getRow();
-    		int attemptCol = attemptMove.getCol() + currentPosition.getCol();
-    		if(attemptRow == selectedRow && attemptCol == selectedCol) {
-    			validMovement = true;
-    			break;
-    		}
-    	}
-    	if(validMovement == false) {
-    		throw new IllegalMovementException("O movimento desejado nao pode ser realizado pela carta "+card.getName());
-    	}
     	if(piecePositioned != null) {
     		piecePositioned.die();
     	}
