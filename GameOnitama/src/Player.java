@@ -52,8 +52,8 @@ public class Player {
     }
 
     /**
-     * MÈtodo que devolve as cartas da m„o do jogador
-     * @return Booleano true para caso seja um mestre e false caso contr·rio
+     * M√©todo que devolve as cartas da m√£o do jogador
+     * @return Booleano true para caso seja um mestre e false caso contr√°rio
      */
     public Card[] getCards() {
     	Card[] cartasNaMao = {card1, card2};
@@ -61,14 +61,14 @@ public class Player {
     }
 
     /**
-     * MÈodo que troca uma carta da m√£o por outra carta (idealmente da mesa)
-     * @param oldCard A carta que ser· substituÌda
-     * @param newCard A carta que ir· substituir
-     * @exception InvalidCardException Caso a carta n„o esteja na m„o do jogador e/ou na mesa
+     * M√©odo que troca uma carta da m√£o por outra carta (idealmente da mesa)
+     * @param oldCard A carta que ser√° substitu√≠da
+     * @param newCard A carta que ir√° substituir
+     * @exception InvalidCardException Caso a carta n√£o esteja na m√£o do jogador e/ou na mesa
      */
     protected void swapCard(Card oldCard, Card newCard) throws InvalidCardException {
     	if(oldCard != card1 && oldCard != card2) {
-        	throw new InvalidCardException("A carta escolhida n„o est· na m„o do jogador");
+        	throw new InvalidCardException("A carta escolhida n√£o est√° na m√£o do jogador");
     	}
     	if(oldCard == card1) {
     		card1 = newCard;

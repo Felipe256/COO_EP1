@@ -9,9 +9,9 @@ public class Spot {
 	
     /**
      * Construtor para espaÃ§os com peÃ§a e com cor
-     * @param piece Peça que inicia nesse espaço do tabuleiro
-     * @param pos Posiçã£o do espaço no tabuleiro
-     * @param color Cor do espaço no tabuleiro (Templo)
+     * @param piece PeÃ§a que inicia nesse espaÃ§o do tabuleiro
+     * @param pos PosiÃ§Ã£o do espaÃ§o no tabuleiro
+     * @param color Cor do espaÃ§o no tabuleiro (Templo)
      */
     public Spot(Piece piece, Position pos, Color color) {
     	peca = piece;
@@ -57,16 +57,16 @@ public class Spot {
     }
 
     /**
-     * Método que devolve a cor do espaço
-     * @return Enum Color com a cor do espaÃ§o. Caso o espaÃ§o nÃ£o tenha cor, o valor do enum será NONE
+     * MÃ©todo que devolve a cor do espaÃ§o
+     * @return Enum Color com a cor do espaÃ§o. Caso o espaÃ§o nÃ£o tenha cor, o valor do enum serÃ¡ NONE
      */
     public Color getColor() {
         return(cor);
     }
 
     /**
-     * Método que verifica se a posição é válida no tabuleiro
-     * @return Um booleano que indica se o objeto representa uma posição válida no tabuleiro
+     * MÃ©todo que verifica se a posiÃ§Ã£o Ã© vÃ¡lida no tabuleiro
+     * @return Um booleano que indica se o objeto representa uma posiÃ§Ã£oo vÃ¡lida no tabuleiro
      */
     public boolean isValid() {
         return(verificaValidadeDaCoordenada(posicao.getRow()) && verificaValidadeDaCoordenada(posicao.getCol()) );
@@ -75,16 +75,16 @@ public class Spot {
     /**
      * 
      * @param coordenada coordenada contida em uma posicao
-     * @return Um booleano true para caso seja valido e false caso contrário
+     * @return Um booleano true para caso seja valido e false caso contrÃ¡rio
      */
     private boolean verificaValidadeDaCoordenada(int coordenada) {
     	return(coordenada >= 0 && coordenada <= 4);
     }
 
     /**
-     * Método que ocupa o espaço atual com a peça passada
+     * MÃ©todo que ocupa o espaÃ§o atual com a peÃ§a passada
      * @param piece A peÃ§a para ocupar este espaÃ§o
-     * @exception IllegalMovementException Caso o espaÃ§o já esteja ocupado por uma peça da mesma cor
+     * @exception IllegalMovementException Caso o espaÃ§o jÃ¡ esteja ocupado por uma peÃ§a da mesma cor
      */
     protected void occupySpot(Piece piece) throws IllegalMovementException {
     	if(this.peca == null) {
@@ -95,7 +95,7 @@ public class Spot {
     		}
     		this.peca = piece;
     	}else {
-    		throw new IllegalMovementException("O espaço ocupado é por uma de suas pecas");
+    		throw new IllegalMovementException("O espaÃ§o estÃ¡ ocupado por uma de suas pecas");
     	}
     }
 
