@@ -1,4 +1,5 @@
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 
 public class TestSpot {
@@ -33,15 +34,15 @@ public class TestSpot {
     @Test
     public void testeGetPiece() {
         assertTrue("A peca deveria ser o mestre vermelho!", ((s1.getPiece().getColor() == Color.RED) && s1.getPiece().isMaster()));
-        assertTrue("A peca deveria ser um aluno azul!", ((s2.getPiece().getColor() == Color.BLUE) && (s2.getPiece().isMaster() == false)));
-        assertTrue("A peca deveria ser nula!", s3.getPiece() == null);
+        assertTrue("A peca deveria ser um aluno azul!", ((s2.getPiece().getColor() == Color.BLUE) && (!s2.getPiece().isMaster())));
+        assertNull("A peca deveria ser nula!", s3.getPiece());
     }
 
     @Test
     public void testeGetColor() {
-        assertTrue("A cor deveria valer RED!", s1.getColor() == Color.RED);
-        assertTrue("A cor deveria valer BLUE!", s2.getColor() == Color.BLUE);
-        assertTrue("A cor deveria valer NONE!", s3.getColor() == Color.NONE);
+        assertSame("A cor deveria valer RED!", s1.getColor(), Color.RED);
+        assertSame("A cor deveria valer NONE!", s2.getColor(), Color.NONE);
+        assertSame("A cor deveria valer NONE!", s3.getColor(), Color.NONE);
     }
 
     @Test
@@ -52,26 +53,26 @@ public class TestSpot {
     }
 
     @Test
-    public void testeOcuppySpot() {
+    public void testeOccupySpot() {
         Piece aux = new Piece(Color.RED, false);
-        Exception e = assertThrows(RuntimeException.class, () -> {s1.ocuppySpot(aux);});
+        Exception e = assertThrows(RuntimeException.class, () -> s1.occupySpot(aux));
         assertTrue("Excecao lancada deveria ser instancia de IllegalMovementException!", e instanceof IllegalMovementException);
 
-        s2.ocuppySpot(aux);
-        assertTrue("A peca deveria ser um aluno vermelho!", (s2.getPiece().getColor() == Color.RED) && (s2.getPiece().isMaster() == false));
+        s2.occupySpot(aux);
+        assertTrue("A peca deveria ser um aluno vermelho!", (s2.getPiece().getColor() == Color.RED) && (!s2.getPiece().isMaster()));
 
-        s3.ocuppySpot(aux);
-        assertTrue("A peca deveria ser um aluno vermelho!", (s3.getPiece().getColor() == Color.RED) && (s3.getPiece().isMaster() == false));
+        s3.occupySpot(aux);
+        assertTrue("A peca deveria ser um aluno vermelho!", (s3.getPiece().getColor() == Color.RED) && (!s3.getPiece().isMaster()));
 
     }
 
     @Test
     public void testeReleaseSpot() {
         s1.releaseSpot();
-        assertTrue("A peca deveria ser nula!", s1.getPiece() == null);
+        assertNull("A peca deveria ser nula!", s1.getPiece());
         s2.releaseSpot();
-        assertTrue("A peca deveria ser nula!", s2.getPiece() == null);
+        assertNull("A peca deveria ser nula!", s2.getPiece());
         s3.releaseSpot();
-        assertTrue("A peca deveria ser nula!", s3.getPiece() == null);
+        assertNull("A peca deveria ser nula!", s3.getPiece());
     }
 }
