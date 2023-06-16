@@ -3,61 +3,61 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class TestPlayer {
-	Card c1;
-	Card c2;
-	Card c3;
-	Card c4;
-	Card[] c5;
-	Card[] c6;
-	Position[] p1;
-	Position[] p2;
-	Position[] p3;
-	Position[] p4;
-	String nc1;
-	String nc2;
-	String nc3;
-	String nc4;
-	String n1;
-	String n2;
+	Card card1;
+	Card card2;
+	Card card3;
+	Card card4;
+	Card[] expectedPlayer1CardsAfterSwap;
+	Card[] expectedPlayer2CardsAfterSwap;
+	Position[] positionCard1;
+	Position[] positionCard2;
+	Position[] positionCard3;
+	Position[] positionCard4;
+	String nameCard1;
+	String nameCard2;
+	String nameCard3;
+	String nameCard4;
+	String namePlayer1;
+	String namePlayer2;
 	Color red;
 	Color blue;
-	Player pl1;
-	Player pl2;
+	Player player1;
+	Player player2;
 	
 	@Before
 	public void setup() {
-		p1 = new Position[]{new Position(+1, 0), new Position(-2, 0)};
-        p2 = new Position[]{new Position(-1, -2), new Position(+1, -1), new Position(+1, +1), new Position(-1, +2)};
-        p3 = new Position[]{new Position(0, -2), new Position(-1, -1), new Position(+1, +1)};
-        p4 = new Position[]{new Position(+1, -1), new Position(-1, +1), new Position(0, +2)};
-        nc1 = "Tiger";
-        nc2 = "Dragon";
-        nc3 = "Frog";
-        nc4 = "Rabbit";
+		positionCard1 = new Position[]{new Position(+1, 0), new Position(-2, 0)};
+        positionCard2 = new Position[]{new Position(-1, -2), new Position(+1, -1), new Position(+1, +1), new Position(-1, +2)};
+        positionCard3 = new Position[]{new Position(0, -2), new Position(-1, -1), new Position(+1, +1)};
+        positionCard4 = new Position[]{new Position(+1, -1), new Position(-1, +1), new Position(0, +2)};
+        nameCard1 = "Tiger";
+        nameCard2 = "Dragon";
+        nameCard3 = "Frog";
+        nameCard4 = "Rabbit";
         red = Color.RED;
         blue = Color.BLUE;
-		c1 = new Card(nc1, blue, p1);
-		c2 = new Card(nc2, red, p2);
-		c3 = new Card(nc3, red, p3);
-		c4 = new Card(nc4, blue, p4);
-		c5 = new Card[]{c3, c4};
-		c6 = new Card[]{c1, c2};
-		n1 = "Mané";
-		n2 = "Bobão";
-		pl1 = new Player(n1, red, c1, c2);
-		pl2 = new Player(n2, blue, c5);
+		card1 = new Card(nameCard1, blue, positionCard1);
+		card2 = new Card(nameCard2, red, positionCard2);
+		card3 = new Card(nameCard3, red, positionCard3);
+		card4 = new Card(nameCard4, blue, positionCard4);
+		expectedPlayer1CardsAfterSwap = new Card[]{card3, card4};
+		expectedPlayer2CardsAfterSwap = new Card[]{card1, card2};
+		namePlayer1 = "Mané";
+		namePlayer2 = "Bobão";
+		player1 = new Player(namePlayer1, red, card1, card2);
+		player2 = new Player(namePlayer2, blue, expectedPlayer1CardsAfterSwap);
 	}
 	
 	@Test
 	public void testeGetName() {
-		assertEquals("Deveria der Mané!", pl1.getName(), n1);
-		assertEquals("Deveria der Bobão!", pl2.getName(), n2);
+		assertEquals("Deveria der Mané!", player1.getName(), namePlayer1);
+		assertEquals("Deveria der Bobão!", player2.getName(), namePlayer2);
 	}
 	
 	@Test
 	public void testeGetPieceColor() {
-		assertEquals("Deveria ser RED!", pl1.getPieceColor(), red);
-		assertEquals("Deveria ser BLUE!", pl2.getPieceColor(), blue);
+		assertEquals("Deveria ser RED!", player1.getPieceColor(), red);
+		assertEquals("Deveria ser BLUE!", player2.getPieceColor(), blue);
 	}
 	
 	private boolean sameCard(Card a, Card b) {
@@ -79,27 +79,31 @@ public class TestPlayer {
 	
 	@Test
 	public void testeGetCardsDeveSerC1C2C5() {
-		Card[] ret1 = pl1.getCards();
-		Card[] ret2 = pl2.getCards();
-		assertEquals("Número de cartas diferentes em pl1!", 2, ret1.length);
-		assertEquals("Número de cartas diferentes em pl2!", 2, ret2.length);
-		for(int i = 0; i < ret1.length; i++) {
-			assertTrue("Carta errada!", sameCard(ret1[i], c6[i]));
-			assertTrue("Carta errada!", sameCard(ret2[i], c5[i]));
+		Card[] player1Cards = player1.getCards();
+		Card[] player2Cards = player2.getCards();
+		assertEquals("Número de cartas diferentes em pl1!", 2, player1Cards.length);
+		assertEquals("Número de cartas diferentes em pl2!", 2, player2Cards.length);
+		for(int i = 0; i < player1Cards.length; i++) {
+			assertTrue("Carta errada!", sameCard(player1Cards[i], expectedPlayer2CardsAfterSwap[i]));
+			assertTrue("Carta errada!", sameCard(player2Cards[i], expectedPlayer1CardsAfterSwap[i]));
 		}
 	}
 	
 	@Test
 	public void testeSwapCardDeveSerC3C4C1C2() {
-		pl1.swapCard(c1, c3);
-		pl1.swapCard(c2, c4);
-		pl2.swapCard(c3, c1);
-		pl2.swapCard(c4, c2);
-		Card[] ret1 = pl1.getCards();
-		Card[] ret2 = pl2.getCards();
-		for(int i = 0; i < ret1.length; i++) {
-			assertTrue("Carta errada!", sameCard(ret1[i], c5[i]));
-			assertTrue("Carta errada!", sameCard(ret2[i], c6[i]));
+		player1.swapCard(card1, card3);
+		player1.swapCard(card2, card4);
+		player2.swapCard(card3, card1);
+		player2.swapCard(card4, card2);
+		Card[] currentPlayer1Cards = player1.getCards();
+		Card[] currentPlayer2Cards = player2.getCards();
+		for(int i = 0; i < currentPlayer1Cards.length; i++) {
+			assertTrue("Carta errada!", sameCard(currentPlayer1Cards[i], expectedPlayer1CardsAfterSwap[i]));
+			assertTrue("Carta errada!", sameCard(currentPlayer2Cards[i], expectedPlayer2CardsAfterSwap[i]));
 		}
+		Exception e = assertThrows(InvalidCardException.class, () -> player1.swapCard(card1, card4));
+		assertTrue("Excecao lancada deveria ser instancia de InvalidCardException!", e instanceof InvalidCardException);
+		e = assertThrows(InvalidCardException.class, () -> player2.swapCard(card3, card2));
+		assertTrue("Excecao lancada deveria ser instancia de InvalidCardException!", e instanceof InvalidCardException);
 	}
 }

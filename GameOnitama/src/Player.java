@@ -61,7 +61,7 @@ public class Player {
     }
 
     /**
-     * Méodo que troca uma carta da mão por outra carta (idealmente da mesa)
+     * Método que troca uma carta da mão por outra carta (idealmente da mesa)
      * @param oldCard A carta que será substituída
      * @param newCard A carta que irá substituir
      * @exception InvalidCardException Caso a carta não esteja na mão do jogador e/ou na mesa

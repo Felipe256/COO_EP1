@@ -3,23 +3,23 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class TestPosition {
-    Position p1;
-    Position p2;
+    Position position1;
+    Position position2;
     @Before
     public void setup() {
-        p1 = new Position(3, 4);
-        p2 = new Position(1, 2);
+        position1 = new Position(3, 4);
+        position2 = new Position(1, 2);
     }
 
     @Test
     public void testeGetRow() {
-        assertEquals("Coluna era pra ser um!", 1, p2.getRow());
-        assertEquals("Coluna era pra ser tres!", 3, p1.getRow());
+        assertEquals("Coluna era pra ser um!", 1, position2.getRow());
+        assertEquals("Coluna era pra ser tres!", 3, position1.getRow());
     }
 
     @Test
     public void colunasDevemSerQuatroEDois() {
-        assertEquals("Coluna era pra ser dois!", 2, p2.getCol());
-        assertEquals("Coluna era pra ser quatro!", 4, p1.getCol());
+        assertEquals("Coluna era pra ser dois!", 2, position2.getCol());
+        assertEquals("Coluna era pra ser quatro!", 4, position1.getCol());
     }
 }
