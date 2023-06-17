@@ -12,25 +12,25 @@ public class TestPiece {
     }
 
     @Test
-    public void testeGetColor() {
+    public void testGetColor() {
         assertSame("p1 deve ser RED!", Color.RED, piece1.getColor());
         assertSame("p2 deve ser BLUE!", Color.BLUE, piece2.getColor());
     }
 
     @Test
-    public void testeIsMaster() {
+    public void testIsMaster() {
         assertTrue("p1 deve ser mestre!", piece1.isMaster());
         assertTrue("p1 deve ser mestre!", piece1.isMaster());
     }
 
     @Test
-    public void testeIsAlive(){
+    public void testIsAlive(){
         assertTrue("p1 deveria esta viva!", piece1.isAlive());
         assertTrue("p2 deveria estar viva!", piece2.isAlive());
     }
 
     @Test
-    public void testeDie() {
+    public void testDie() {
         piece1.die();
         piece2.die();
         assertFalse("p1 deve estar morta!", piece1.isAlive());

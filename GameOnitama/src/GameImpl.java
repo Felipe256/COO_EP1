@@ -142,16 +142,6 @@ public class GameImpl implements Game{
     	if(card == null) {
     		throw new InvalidCardException("Nenhuma carta foi selecionada para mover uma peca");
     	}
-		boolean validMovement = false;
-		Position[] possibleMoves = card.getPositions();
-		for(Position attemptMove : possibleMoves) {
-			int attemptRow = attemptMove.getRow();
-			int attemptCol = attemptMove.getCol();
-			if(attemptRow == cardMove.getRow() && attemptCol == cardMove.getCol()) {
-				validMovement = true;
-				break;
-			}
-		}
 		Position newPosition = new Position(rowPiece+cardMove.getRow(), colPiece+cardMove.getCol());
 		Spot newSpot = new Spot(newPosition);
 		if(!newSpot.isValid()) {
@@ -164,6 +154,16 @@ public class GameImpl implements Game{
 			Color piecePositionedColor = piecePositioned.getColor();
 			if(pieceMovedColor == piecePositionedColor) {
 				throw new IllegalMovementException("A posicao esta ocupada por uma de suas pecas");
+			}
+		}
+		boolean validMovement = false;
+		Position[] possibleMoves = card.getPositions();
+		for(Position attemptMove : possibleMoves) {
+			int attemptRow = attemptMove.getRow();
+			int attemptCol = attemptMove.getCol();
+			if(attemptRow == cardMove.getRow() && attemptCol == cardMove.getCol()) {
+				validMovement = true;
+				break;
 			}
 		}
 		if(!validMovement) {

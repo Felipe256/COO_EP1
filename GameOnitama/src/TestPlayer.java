@@ -49,13 +49,13 @@ public class TestPlayer {
 	}
 	
 	@Test
-	public void testeGetName() {
+	public void testGetName() {
 		assertEquals("Deveria der Mané!", player1.getName(), namePlayer1);
 		assertEquals("Deveria der Bobão!", player2.getName(), namePlayer2);
 	}
 	
 	@Test
-	public void testeGetPieceColor() {
+	public void testGetPieceColor() {
 		assertEquals("Deveria ser RED!", player1.getPieceColor(), red);
 		assertEquals("Deveria ser BLUE!", player2.getPieceColor(), blue);
 	}
@@ -78,7 +78,7 @@ public class TestPlayer {
 	}
 	
 	@Test
-	public void testeGetCardsDeveSerC1C2C5() {
+	public void testGetCardsDeveSerC1C2C5() {
 		Card[] player1Cards = player1.getCards();
 		Card[] player2Cards = player2.getCards();
 		assertEquals("Número de cartas diferentes em pl1!", 2, player1Cards.length);
@@ -90,7 +90,7 @@ public class TestPlayer {
 	}
 	
 	@Test
-	public void testeSwapCardDeveSerC3C4C1C2() {
+	public void testSwapCardDeveSerC3C4C1C2() {
 		player1.swapCard(card1, card3);
 		player1.swapCard(card2, card4);
 		player2.swapCard(card3, card1);
@@ -101,9 +101,7 @@ public class TestPlayer {
 			assertTrue("Carta errada!", sameCard(currentPlayer1Cards[i], expectedPlayer1CardsAfterSwap[i]));
 			assertTrue("Carta errada!", sameCard(currentPlayer2Cards[i], expectedPlayer2CardsAfterSwap[i]));
 		}
-		Exception e = assertThrows(InvalidCardException.class, () -> player1.swapCard(card1, card4));
-		assertTrue("Excecao lancada deveria ser instancia de InvalidCardException!", e instanceof InvalidCardException);
-		e = assertThrows(InvalidCardException.class, () -> player2.swapCard(card3, card2));
-		assertTrue("Excecao lancada deveria ser instancia de InvalidCardException!", e instanceof InvalidCardException);
+		assertThrows(InvalidCardException.class, () -> player1.swapCard(card1, card4));
+		assertThrows(InvalidCardException.class, () -> player2.swapCard(card3, card2));
 	}
 }

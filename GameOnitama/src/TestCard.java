@@ -25,19 +25,19 @@ public class TestCard {
 	}
 	
 	@Test
-	public void testeGetName() {
+	public void testGetName() {
 		assertEquals("Deveria ser Tiger!", nameCard1, card1.getName());
 		assertEquals("Deveria ser Elephant!", nameCard2, card2.getName());
 	}
 	
 	@Test
-	public void testeGetColor() {
+	public void testGetColor() {
 		assertSame("Deveria ser BLUE!", colorCard1, card1.getColor());
 		assertSame("Deveria ser RED!", colorCard2, card2.getColor());
 	}
 	
 	@Test
-	public void testeGetPositions() {
+	public void testGetPositions() {
 		Position[] currentPosCard1 = card1.getPositions();
 		Position[] currentPosCard2 = card2.getPositions();
 		assertTrue("Row deveria valer 1 e -2!", (posCard1[0].getRow() == currentPosCard1[0].getRow())&&(posCard1[1].getRow() == currentPosCard1[1].getRow()));
@@ -47,7 +47,7 @@ public class TestCard {
 	}
 	
 	@Test
-	public void testeCreateCards() {
+	public void testCreateCards() {
 		Card[] cards = Card.createCards();
 		assertEquals("Tamanho esperado é 5!", 5, cards.length);
         for(Card testingCard : cards)

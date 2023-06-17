@@ -15,21 +15,21 @@ public class TestColor {
     }
 
     @Test
-    public void testeEhRED() {
+    public void testEhRED() {
         assertSame("Devia ser RED!", red, Color.RED);
         assertNotSame("Nao devia ser RED mas BLUE!", blue, Color.RED);
         assertNotSame("Nao devia ser RED mas NONE!", none, Color.RED);
     }
 
     @Test
-    public void testeEhBLUE() {
+    public void testEhBLUE() {
         assertNotSame("Nao devia ser BLUE mas RED!", red, Color.BLUE);
         assertSame("Devia ser BLUE!", blue, Color.BLUE);
         assertNotSame("Nao devia ser BLUE mas NONE!", none, Color.BLUE);
     }
 
     @Test
-    public void testeEhNONE() {
+    public void testEhNONE() {
         assertNotSame("Nao devia ser NONE mas RED!", red, Color.NONE);
         assertNotSame("Nao devia ser NONE mas BLUE!", blue, Color.NONE);
         assertSame("Devia ser NONE!", none, Color.NONE);

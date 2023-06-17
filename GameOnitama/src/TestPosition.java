@@ -12,14 +12,14 @@ public class TestPosition {
     }
 
     @Test
-    public void testeGetRow() {
-        assertEquals("Coluna era pra ser um!", 1, position2.getRow());
-        assertEquals("Coluna era pra ser tres!", 3, position1.getRow());
+    public void testGetRow() {
+        assertEquals("Linha era pra ser tres!", 3, position1.getRow());
+        assertEquals("Linha era pra ser um!", 1, position2.getRow());
     }
 
     @Test
-    public void colunasDevemSerQuatroEDois() {
-        assertEquals("Coluna era pra ser dois!", 2, position2.getCol());
+    public void testGetCol() {
         assertEquals("Coluna era pra ser quatro!", 4, position1.getCol());
+        assertEquals("Coluna era pra ser dois!", 2, position2.getCol());
     }
 }
