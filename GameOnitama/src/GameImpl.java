@@ -19,7 +19,7 @@ public class GameImpl implements Game{
 	public GameImpl(String namePlayerRed, String namePlayerBlue) {
 		startBoard();
 		Card[] gameCards = Card.createCards();
-		deliverCards(gameCards, namePlayerBlue, namePlayerRed);
+		deliverCards(gameCards, namePlayerRed, namePlayerBlue);
 	}
 	
 	public GameImpl(String namePlayerRed, String namePlayerBlue, Card[] deck) {
@@ -30,7 +30,7 @@ public class GameImpl implements Game{
 		List<Card> deckList = Arrays.asList(deck);
 		Collections.shuffle(deckList);
 		deckList = deckList.subList(0, 5);
-		deliverCards(deckList.toArray(new Card[0]), namePlayerBlue, namePlayerRed);
+		deliverCards(deckList.toArray(new Card[0]), namePlayerRed, namePlayerBlue);
 	}
 	
 	private void startBoard(){
@@ -58,7 +58,7 @@ public class GameImpl implements Game{
 		}
 	}
 
-	private void deliverCards(Card[] gameCards, String namePlayerBlue, String namePlayerRed){
+	private void deliverCards(Card[] gameCards, String namePlayerRed, String namePlayerBlue){
 		this.tableCard = gameCards[0];
 		this.turn = tableCard.getColor();
 		this.playerBlue = new Player(namePlayerBlue, Color.BLUE, gameCards[1], gameCards[2]);
@@ -170,15 +170,12 @@ public class GameImpl implements Game{
 			throw new IllegalMovementException("O movimento desejado nao pode ser realizado pela carta "+card.getName());
 		}
     	Card[] playerCards;
-    	Piece[] playerPieces;
     	Player player;
     	if(pieceMovedColor == Color.BLUE) {
     		playerCards = playerBlue.getCards();
-    		playerPieces = bluePieces;
     		player = playerBlue;
     	}else {//if color is RED
     		playerCards = playerRed.getCards();
-    		playerPieces = redPieces;
     		player = playerRed;
     	}
     	if(card != playerCards[0] && card != playerCards[1]) {
