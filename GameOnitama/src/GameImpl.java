@@ -187,16 +187,6 @@ public class GameImpl implements Game{
     	if(card != playerCards[0] && card != playerCards[1]) {
 			throw new InvalidCardException("A carta utilizada nao esta na mao do jogador " + pieceMovedColor);
 		}
-		boolean pieceValid = false;
-		for(Piece singlePiece : playerPieces) {
-			if(singlePiece == piece) {
-				pieceValid = true;
-				break;
-			}
-		}
-		if(!pieceValid) {
-			throw new InvalidPieceException("A peca nao esta no tabuleiro");
-		}
     	if(piecePositioned != null) {
     		piecePositioned.die();
     	}
