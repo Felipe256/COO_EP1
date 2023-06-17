@@ -3,8 +3,8 @@ import java.util.*;
 public class GameImpl implements Game{
 	
 	private Spot[][] board;
-	private final Player playerBlue;
-	private final Player playerRed;
+	private Player playerBlue;
+	private Player playerRed;
 	private Piece[] bluePieces;
 	private Piece[] redPieces;
 	private Card tableCard;
@@ -13,19 +13,13 @@ public class GameImpl implements Game{
 	public GameImpl() {
 		startBoard();
 		Card[] gameCards = Card.createCards();
-		tableCard = gameCards[0];
-		turn = tableCard.getColor();
-		playerBlue = new Player("Anonymous1", Color.BLUE, gameCards[1], gameCards[2]);
-		playerRed = new Player("Anonymous2", Color.RED, gameCards[3], gameCards[4]);
+		deliverCards(gameCards, "Anonymous1", "Anonymous2");
 	}
 	
 	public GameImpl(String namePlayerRed, String namePlayerBlue) {
 		startBoard();
 		Card[] gameCards = Card.createCards();
-		tableCard = gameCards[0];
-		turn = tableCard.getColor();
-		playerBlue = new Player(namePlayerBlue, Color.BLUE, gameCards[1], gameCards[2]);
-		playerRed = new Player(namePlayerRed, Color.RED, gameCards[3], gameCards[4]);
+		deliverCards(gameCards, namePlayerBlue, namePlayerRed);
 	}
 	
 	public GameImpl(String namePlayerRed, String namePlayerBlue, Card[] deck) {
@@ -36,11 +30,7 @@ public class GameImpl implements Game{
 		List<Card> deckList = Arrays.asList(deck);
 		Collections.shuffle(deckList);
 		deckList = deckList.subList(0, 5);
-		Card[] gameCards = deckList.toArray(new Card[0]);
-		tableCard = gameCards[0];
-		turn = tableCard.getColor();
-		playerBlue = new Player(namePlayerBlue, Color.BLUE, gameCards[1], gameCards[2]);
-		playerRed = new Player(namePlayerRed, Color.RED, gameCards[3], gameCards[4]);
+		deliverCards(deckList.toArray(new Card[0]), namePlayerBlue, namePlayerRed);
 	}
 	
 	private void startBoard(){
@@ -66,6 +56,13 @@ public class GameImpl implements Game{
 			board[2][i] = new Spot(new Position(2, i));
 			board[3][i] = new Spot(new Position(3 , i));
 		}
+	}
+
+	private void deliverCards(Card[] gameCards, String namePlayerBlue, String namePlayerRed){
+		this.tableCard = gameCards[0];
+		this.turn = tableCard.getColor();
+		this.playerBlue = new Player(namePlayerBlue, Color.BLUE, gameCards[1], gameCards[2]);
+		this.playerRed = new Player(namePlayerRed, Color.RED, gameCards[3], gameCards[4]);
 	}
 	
 	/**
